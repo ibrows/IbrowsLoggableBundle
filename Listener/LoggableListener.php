@@ -96,7 +96,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                         $field => array(null, $id)
                     )
                 );
-                $ea->setOriginalObjectProperty($uow, spl_object_hash($logEntry), $field, $id);
+                $ea->setOriginalObjectProperty($uow, $logEntry, $field, $id);
             }
             unset($this->pendingLogEntryInserts[$oid]);
 
@@ -556,7 +556,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                         $oldValue = $oldValue ? $om->getReference($mapping['targetEntity'], $oldValue) : null;
                     }
                     $meta->getReflectionProperty($field)->setValue($object, $oldValue);
-                    $ea->setOriginalObjectProperty($uow, $hash, $field, $oldValue);
+                    $ea->setOriginalObjectProperty($uow, $object, $field, $oldValue);
                     // $undoSet[$field] = array(null,$oldValue);
                 }
 
