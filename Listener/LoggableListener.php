@@ -18,7 +18,7 @@ use Ibrows\LoggableBundle\Model\AbstractLogModel;
 use Ibrows\LoggableBundle\Model\ScheduledChangeablePartially;
 use Ibrows\LoggableBundle\Model\ScheduledChangeable;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Role\SwitchUserRole;
+use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 
 /**
  * Class LoggableListener
@@ -714,10 +714,8 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
      */
     protected function getOriginalToken(TokenInterface $token)
     {
-        foreach ($token->getRoles() as $role) {
-            if ($role instanceof SwitchUserRole) {
-                return $role->getSource();
-            }
+        if ($token instanceof SwitchUserToken) {
+            return $token->getOriginalToken();
         }
         return false;
     }
