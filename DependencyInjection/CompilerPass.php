@@ -19,7 +19,9 @@ class CompilerPass implements CompilerPassInterface
         $logger = $containerBuilder->getDefinition('stof_doctrine_extensions.listener.loggable');
 
         foreach ($configs as $key => $value) {
-            $logger->addMethodCall('set' . $key, [$value]);
+            // Convert snake_case to PascalCase for method names
+            $methodName = 'set' . str_replace('_', '', ucwords($key, '_'));
+            $logger->addMethodCall($methodName, [$value]);
         }
 
         $containerBuilder

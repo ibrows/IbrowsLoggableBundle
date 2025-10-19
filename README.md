@@ -55,3 +55,20 @@ Install & setup the bundle
         class:
             loggable: Ibrows\LoggableBundle\Listener\LoggableListener
     ```
+
+5. Optional: Configure IbrowsLoggableBundle
+
+    ```yaml
+    # config/packages/ibrows_loggable.yaml
+    ibrows_loggable:
+        changeable:
+            catch_exception: false
+            change_entity_class: 'Ibrows\LoggableBundle\Entity\ChangeSet'
+        loggable:
+            default_log_entry_class: 'Ibrows\LoggableBundle\Entity\Log'
+            log_parent_entry_class: 'Ibrows\LoggableBundle\Entity\LogMany2Many'
+            log_collection_entry_class: 'Ibrows\LoggableBundle\Entity\LogParent'
+            enabled: true
+            use_only_single_ids: true
+            default_all_versioned: true
+    ```

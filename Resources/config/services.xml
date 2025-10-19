@@ -13,10 +13,10 @@
         <service id="ibrows_loggable.changer" class="Ibrows\LoggableBundle\Util\Changer">
             <argument type="service" id="doctrine.orm.entity_manager"></argument>
             <argument type="service" id="ibrows_loggable.logger"></argument>
-            <argument type="string">%ibrows_loggable.changeable.ChangeEntityClass%</argument>
+            <argument type="string">%ibrows_loggable.changeable.change_entity_class%</argument>
 
             <call method="setCatchExceptions">
-                <argument type="string">%ibrows_loggable.changeable.catchexception%</argument>
+                <argument type="string">%ibrows_loggable.changeable.catch_exception%</argument>
             </call>
             <call method="setLogger">
                 <argument type="service" id="logger"/>
