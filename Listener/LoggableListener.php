@@ -37,7 +37,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * @var bool
      */
-    protected $useOnySingleIds = true;
+    protected $useOnlySingleIds = true;
     /**
      * @var bool
      */
@@ -83,7 +83,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
         if ($this->pendingParents && array_key_exists($oid, $this->pendingParents)) {
             $wrapped = AbstractWrapper::wrap($object, $om);
-            $id = $wrapped->getIdentifier($this->useOnySingleIds);
+            $id = $wrapped->getIdentifier($this->useOnlySingleIds);
             foreach ($this->pendingParents[$oid] as $pending) {
                 $logEntry = $pending['log'];
                 $field = $pending['field'];
@@ -237,7 +237,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                                 'field' => $field
                             );
                         }
-                        $value = $wrappedAssoc->getIdentifier($this->useOnySingleIds);
+                        $value = $wrappedAssoc->getIdentifier($this->useOnlySingleIds);
                     }
                     if ($oldValue) {
                         $oid = spl_object_hash($oldValue);
@@ -249,7 +249,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                                 'field' => $field
                             );
                         }
-                        $oldValue = $wrappedAssoc->getIdentifier($this->useOnySingleIds);
+                        $oldValue = $wrappedAssoc->getIdentifier($this->useOnlySingleIds);
                     }
 
                 }
@@ -461,11 +461,11 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     }
 
     /**
-     * @param boolean $useOnySingleIds
+     * @param boolean $useOnlySingleIds
      */
-    public function setUseOnySingleIds($useOnySingleIds)
+    public function setUseOnlySingleIds($useOnlySingleIds)
     {
-        $this->useOnySingleIds = $useOnySingleIds;
+        $this->useOnlySingleIds = $useOnlySingleIds;
     }
 
     /**
