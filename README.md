@@ -1,55 +1,57 @@
 IbrowsLoggableBundle
 =============================
 
-Symfony2 Bundle that will track every Entity change on your Project and save it to a log table. Your Project get's some kind of confirmability with this Bundle.
+Symfony Bundle that will track every Entity change on your Project and save it to a log table. Your Project gets some kind of confirmability with this Bundle.
 
-It also provide some methods to get back an entity to a earlier version.
+It also provides some methods to get back an entity to an earlier version.
+
+## Requirements
+
+- PHP 8.1 or higher
+- Symfony 6.4 or higher
 
 Install & setup the bundle
 --------------------------
 
 1. Add IbrowsLoggableBundle in your composer.json:
 
-	```js
+	```json
 	{
 	    "require": {
-	        "ibrows/loggable-bundle": "~1.0",
+	        "ibrows/loggable-bundle": "~1.0"
 	    }
 	}
 	```
 
 2. Now tell composer to download the bundle by running the command:
 
-    ``` bash
-    $ php composer.phar update ibrows/loggable-bundle
+    ```bash
+    $ composer require ibrows/loggable-bundle
     ```
 
-    Composer will install the bundle to your project's `ibrows/loggable-bundle` directory. ( PSR-4 )
+    Composer will install the bundle to your project's vendor directory (PSR-4).
 
-3. Add the bundles to your `AppKernel` class
+3. Add the bundles to your bundles configuration
 
-    ``` php
-    // app/AppKernerl.php
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new Ibrows\LoggableBundle\IbrowsLoggableBundle(),
-            // ...
-        );
+    ```php
+    // config/bundles.php
+    return [
         // ...
-    }
+        Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
+        Ibrows\LoggableBundle\IbrowsLoggableBundle::class => ['all' => true],
+        // ...
+    ];
     ```
 
-4. Recommend config of stof_doctrine_extensions
+4. Recommended config of stof_doctrine_extensions
 
-    ``` yml
+    ```yaml
+    # config/packages/stof_doctrine_extensions.yaml
     stof_doctrine_extensions:
         orm:
             default:
-              softdeleteable: true
-              loggable: true
+                softdeleteable: true
+                loggable: true
         class:
             loggable: Ibrows\LoggableBundle\Listener\LoggableListener
     ```

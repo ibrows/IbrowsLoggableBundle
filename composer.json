@@ -4,11 +4,13 @@
     "description": "Extended Loggable Bundle",
     "keywords": [
         "ibrows",
-        "symfony3",
+        "symfony",
+        "symfony6",
         "bundle",
         "loggable",
         "behaviors",
-        "doctrine2",
+        "doctrine",
+        "doctrine-extensions",
         "extensions",
         "gedmo",
         "LoggableBundle"
@@ -23,7 +25,17 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "stof/doctrine-extensions-bundle": "^1.2.0"
+        "php": "^8.1",
+        "symfony/framework-bundle": "^6.4",
+        "symfony/console": "^6.4",
+        "symfony/form": "^6.4",
+        "symfony/dependency-injection": "^6.4",
+        "symfony/config": "^6.4",
+        "symfony/http-kernel": "^6.4",
+        "doctrine/orm": "^2.14|^3.0",
+        "doctrine/doctrine-bundle": "^2.7",
+        "doctrine/persistence": "^2.5|^3.0",
+        "stof/doctrine-extensions-bundle": "^1.8"
     },
     "autoload": {
         "psr-4": { "Ibrows\\LoggableBundle\\": "" }

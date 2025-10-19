@@ -8,8 +8,7 @@
 
 namespace Ibrows\LoggableBundle\Util;
 
-
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Ibrows\LoggableBundle\Entity\Log;
 use Ibrows\LoggableBundle\Entity\LogMany2Many;
 use Ibrows\LoggableBundle\Entity\LogParent;
@@ -18,26 +17,25 @@ use Ibrows\LoggableBundle\Repository\ChangeSetRepository;
 use Ibrows\LoggableBundle\Repository\LogRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
- * Class Changer
+ * Class Logger
  * @package Ibrows\LoggableBundle\Util
  */
 class Logger
 {
-
     /**
      * @var LoggerInterface
      */
     protected $logger;
+
     /**
      * @var OutputInterface
      */
     protected $output;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
+     * @var ObjectManager
      */
     protected $manager;
 

@@ -8,8 +8,7 @@
 
 namespace Ibrows\LoggableBundle\Util;
 
-
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Ibrows\LoggableBundle\Repository\ChangeSetRepository;
 use Ibrows\LoggableBundle\Repository\LogRepository;
 use Psr\Log\LoggerInterface;
@@ -21,18 +20,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Changer
 {
-
     /**
      * @var LoggerInterface
      */
     protected $logger;
+
     /**
      * @var OutputInterface
      */
     protected $output;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
+     * @var ObjectManager
      */
     protected $manager;
 

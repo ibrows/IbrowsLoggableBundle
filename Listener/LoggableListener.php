@@ -672,7 +672,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
         if (!$originalToken = $this->getOriginalToken($username)) {
             return;
         }
-        $this->sourceUsername = $originalToken->getUsername();
+        $this->sourceUsername = $originalToken->getUserIdentifier();
     }
 
     /**

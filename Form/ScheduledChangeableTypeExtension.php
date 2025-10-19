@@ -8,27 +8,22 @@
 
 namespace Ibrows\LoggableBundle\Form;
 
-
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ScheduledChangeableTypeExtension extends AbstractTypeExtension
 {
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['scheduledchangeable'] === false) {
             return;
         }
 
         $format = "yyyy-MM-dd";
-        if(isset($options['scheduledchangeable_format'])){
+        if (isset($options['scheduledchangeable_format'])) {
             $format = $options['scheduledchangeable_format'];
         }
 
@@ -43,37 +38,27 @@ class ScheduledChangeableTypeExtension extends AbstractTypeExtension
             }
         }
 
-        $builder->add($propertyName, 'date', array('widget' => 'single_text', 'format' => $format,'required'=>false));
-
+        $builder->add($propertyName, DateType::class, [
+            'widget' => 'single_text',
+            'format' => $format,
+            'required' => false
+        ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array('scheduledchangeable' => 'auto'));
+        $resolver->setDefaults(['scheduledchangeable' => 'auto']);
     }
 
-    /**
-     * Returns the name of the type being extended.
-     *
-     * @return string The name of the type being extended
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param string $property
-     * @return bool
-     */
-    protected function checkIsScheduledChangeable(FormBuilderInterface $builder, $property)
+    protected function checkIsScheduledChangeable(FormBuilderInterface $builder, string $property): bool
     {
         $entity = $builder->getData();
-        if ($entity == null || !is_object($entity) || (method_exists($entity,'getId') && $entity->getId() == null) )  {
+        if ($entity === null || !is_object($entity) || (method_exists($entity, 'getId') && $entity->getId() === null)) {
             return false;
         }
         $class = get_class($entity);
@@ -81,10 +66,7 @@ class ScheduledChangeableTypeExtension extends AbstractTypeExtension
         if (!$reflectionClass->implementsInterface('\Ibrows\LoggableBundle\Model\ScheduledChangeable')) {
             return false;
         }
-        if (property_exists($class, $property)) {
-            return true;
-        }
 
-        return false;
+        return property_exists($class, $property);
     }
 }
