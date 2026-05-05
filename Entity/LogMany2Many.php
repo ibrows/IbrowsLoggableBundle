@@ -5,9 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ibrows\Bundle\SonataAdminAnnotationBundle\Annotation as Sonata;
 
-/**
- * @ORM\Entity(repositoryClass="Ibrows\LoggableBundle\Repository\LogMany2ManyRepository")
- */
+#[ORM\Entity(repositoryClass: \Ibrows\LoggableBundle\Repository\LogMany2ManyRepository::class)]
 class LogMany2Many extends AbstractLog
 {
 

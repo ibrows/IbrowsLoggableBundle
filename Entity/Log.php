@@ -9,9 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Ibrows\LoggableBundle\Model\AbstractLogModel;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="Ibrows\LoggableBundle\Repository\LogRepository")
- */
+#[ORM\Entity(repositoryClass: \Ibrows\LoggableBundle\Repository\LogRepository::class)]
 class Log extends AbstractLog
 {
 

@@ -7,22 +7,16 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Ibrows\LoggableBundle\Model\AbstractLogModel;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="Ibrows\LoggableBundle\Repository\LogRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\Table(
- *     name="log",
- *  indexes={
- *      @ORM\Index(name="log_object_class_lookup_idx", columns={"object_class"}),
- *      @ORM\Index(name="log_object_id_lookup_idx", columns={"object_id"}),
- *      @ORM\Index(name="log_child_class_lookup_idx", columns={"child_class"}),
- *      @ORM\Index(name="log_child_id_lookup_idx", columns={"child_id"}),
- *      @ORM\Index(name="log_date_lookup_idx", columns={"logged_at"}),
- *      @ORM\Index(name="log_user_lookup_idx", columns={"username"}),
- *      @ORM\Index(name="log_version_lookup_max", columns={"object_class","object_id","dtype","version"})
- *  }
- * )
- */
+#[ORM\Table(name: 'log')]
+#[ORM\Index(name: 'log_object_class_lookup_idx', columns: ['object_class'])]
+#[ORM\Index(name: 'log_object_id_lookup_idx', columns: ['object_id'])]
+#[ORM\Index(name: 'log_child_class_lookup_idx', columns: ['child_class'])]
+#[ORM\Index(name: 'log_child_id_lookup_idx', columns: ['child_id'])]
+#[ORM\Index(name: 'log_date_lookup_idx', columns: ['logged_at'])]
+#[ORM\Index(name: 'log_user_lookup_idx', columns: ['username'])]
+#[ORM\Index(name: 'log_version_lookup_max', columns: ['object_class', 'object_id', 'dtype', 'version'])]
+#[ORM\Entity(repositoryClass: \Ibrows\LoggableBundle\Repository\LogRepository::class)]
+#[ORM\InheritanceType('SINGLE_TABLE')]
 abstract class AbstractLog extends AbstractLogModel
 {
 
@@ -32,93 +26,81 @@ abstract class AbstractLog extends AbstractLogModel
 
     /**
      * @var integer $id
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
     protected $id;
 
     /**
      * @var string $action
-     *
-     * @ORM\Column(type="string", length=8)
      */
+    #[ORM\Column(type: 'string', length: 8)]
     protected $action;
 
     /**
      * @var string $loggedAt
-     *
-     * @ORM\Column(name="logged_at", type="datetime")
      */
+    #[ORM\Column(name: 'logged_at', type: 'datetime')]
     protected $loggedAt;
 
     /**
      * @var string $objectId
-     *
-     * @ORM\Column(name="object_id", length=64, nullable=true)
      */
+    #[ORM\Column(name: 'object_id', length: 64, nullable: true)]
     protected $objectId;
 
     /**
      * @var string $objectClass
-     *
-     * @ORM\Column(name="object_class", type="string", length=255)
      */
+    #[ORM\Column(name: 'object_class', type: 'string', length: 255)]
     protected $objectClass;
 
     /**
      * @var string $username
-     *
-     * @ORM\Column(length=255, nullable=true)
      */
+    #[ORM\Column(length: 255, nullable: true)]
     protected $username;
 
     /**
      * @var string $sourceUsername
-     *
-     * @ORM\Column(length=255, nullable=true)
      */
+    #[ORM\Column(length: 255, nullable: true)]
     protected $sourceUsername;
 
     /**
      * @var integer $version
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $version;
 
     /**
      * @var array $data
-     *
-     * @ORM\Column(type="json", nullable=true)
      */
+    #[ORM\Column(type: 'json', nullable: true)]
     protected $data;
 
     /**
      * @var array $olddata
-     *
-     * @ORM\Column(type="json", nullable=true, name="old_data")
      */
+    #[ORM\Column(type: 'json', nullable: true, name: 'old_data')]
     protected $oldData;
 
     /**
      * @var LogParent[]
-     * @ORM\OneToMany(targetEntity="Ibrows\LoggableBundle\Entity\LogParent", mappedBy="childLog")
      */
+    #[ORM\OneToMany(targetEntity: \Ibrows\LoggableBundle\Entity\LogParent::class, mappedBy: 'childLog')]
     protected $parents;
 
     /**
      * @var string $objectId
-     *
-     * @ORM\Column(name="child_id", length=64, nullable=true)
      */
+    #[ORM\Column(name: 'child_id', length: 64, nullable: true)]
     protected $childId;
     /**
      * @var string $objectClass
-     *
-     * @ORM\Column(name="child_class", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'child_class', type: 'string', length: 255, nullable: true)]
     protected $childClass;
 
     abstract public function getLogType();

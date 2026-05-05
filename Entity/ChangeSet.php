@@ -8,78 +8,64 @@ use Gedmo\Loggable\Entity\MappedSuperclass\AbstractLogEntry;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="Ibrows\LoggableBundle\Repository\ChangeSetRepository")
- * @ORM\Table(
- *     name="changeset",
- *  indexes={
- *      @ORM\Index(name="log_change_class_lookup_idx", columns={"object_class"}),
- *      @ORM\Index(name="log_change_date_lookup_idx", columns={"change_at"}),
- *      @ORM\Index(name="log_change_user_lookup_idx", columns={"username"})
- *  }
- * )
- */
+#[ORM\Table(name: 'changeset')]
+#[ORM\Index(name: 'log_change_class_lookup_idx', columns: ['object_class'])]
+#[ORM\Index(name: 'log_change_date_lookup_idx', columns: ['change_at'])]
+#[ORM\Index(name: 'log_change_user_lookup_idx', columns: ['username'])]
+#[ORM\Entity(repositoryClass: \Ibrows\LoggableBundle\Repository\ChangeSetRepository::class)]
 class ChangeSet
 {
 
     /**
      * @var integer $id
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue
      */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
     protected $id;
 
     /**
      * @var string $action
-     *
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $action;
 
     /**
      * @var \DateTime $changeAt
-     *
-     * @ORM\Column(name="change_at", type="datetime")
      */
+    #[ORM\Column(name: 'change_at', type: 'datetime')]
     protected $changeAt;
 
     /**
      * @var string $objectId
-     *
-     * @ORM\Column(name="object_id", length=64, nullable=true)
      */
+    #[ORM\Column(name: 'object_id', length: 64, nullable: true)]
     protected $objectId;
 
     /**
      * @var string $objectClass
-     *
-     * @ORM\Column(name="object_class", type="string", length=255)
      */
+    #[ORM\Column(name: 'object_class', type: 'string', length: 255)]
     protected $objectClass;
 
 
     /**
      * @var array $data
-     *
-     * @ORM\Column(type="json", nullable=true)
      */
+    #[ORM\Column(type: 'json', nullable: true)]
     protected $data;
 
     /**
      * @var array $olddata
-     *
-     * @ORM\Column(type="json", nullable=true, name="old_data")
      */
+    #[ORM\Column(type: 'json', nullable: true, name: 'old_data')]
     protected $oldData;
 
 
     /**
      * @var string $data
-     *
-     * @ORM\Column(length=255, nullable=true)
      */
+    #[ORM\Column(length: 255, nullable: true)]
     protected $username;
 
 
