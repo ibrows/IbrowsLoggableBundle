@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\OnClearEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\NoResultException;
+use Gedmo\Loggable\LogEntryInterface;
 use Gedmo\Loggable\Mapping\Event\LoggableAdapter;
 use Gedmo\Tool\Wrapper\AbstractWrapper;
 use Gedmo\Tool\WrapperInterface;
@@ -67,7 +68,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * @param EventArgs $args
      */
-    public function postPersist(EventArgs $args)
+    public function postPersist(EventArgs $args): void
     {
         parent::postPersist($args);
 
@@ -107,7 +108,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * {@inheritdoc}
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return array(
             'onClear',
@@ -131,7 +132,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * @param EventArgs $eventArgs
      */
-    public function onFlush(EventArgs $eventArgs)
+    public function onFlush(EventArgs $eventArgs): void
     {
         if (!$this->enabled) {
             return;
@@ -166,7 +167,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
      * @param object          $object
      * @param LoggableAdapter $ea
      */
-    protected function createLogEntry($action, $object, LoggableAdapter $ea)
+    protected function createLogEntry($action, $object, LoggableAdapter $ea): ?LogEntryInterface
     {
         /** @var $om EntityManagerInterface */
         $om = $ea->getObjectManager();
@@ -175,7 +176,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
         $config = $this->getConfiguration($om, $meta->name);
 
         if (!$config && !$this->defaultAllVersioned) {
-            return;
+            return null;
         }
         $logEntry = $this->newLogEntry($ea, $meta->name, $action);
 
@@ -263,7 +264,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
         if ($action === self::ACTION_UPDATE && 0 === count($newValues)) {
             //nothing to log
-            return;
+            return null;
         }
 
 
@@ -271,7 +272,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
         if ($this->addChangeSet($object, $logEntry, $ea)) {
             //dont save log if changeset added
-            return;
+            return null;
         }
         $this->setVersion($logEntry, $ea, $logEntryMeta, $wrapped, $action);
         $this->prePersistLogEntry($logEntry, $object);
@@ -286,7 +287,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
         $uow->computeChangeSet($logEntryMeta, $logEntry);
 
-
+        return $logEntry;
     }
 
     protected function setVersion(AbstractLogModel $logEntry, LoggableAdapter $ea, $logEntryMeta, WrapperInterface $wrapped, $action)
@@ -663,7 +664,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * @param string|TokenInterface|object $username
      */
-    public function setUsername($username)
+    public function setUsername($username): void
     {
         parent::setUsername($username);
         if (!$username instanceof TokenInterface) {
