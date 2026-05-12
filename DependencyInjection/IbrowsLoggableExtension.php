@@ -18,8 +18,8 @@ class IbrowsLoggableExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
         $this->registerContainerParametersRecursive($container, $this->getAlias(), $config);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.xml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.php');
 
         $loggableClass = $container->getParameter('stof_doctrine_extensions.listener.loggable.class');
         $r = new \ReflectionClass($loggableClass);
