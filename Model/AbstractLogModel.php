@@ -1,10 +1,12 @@
 <?php
 namespace Ibrows\LoggableBundle\Model;
 
+use Gedmo\Loggable\LogEntryInterface;
+
 /**
  * AbstractLog
  */
-abstract class AbstractLogModel
+abstract class AbstractLogModel implements LogEntryInterface
 {
     /**
      * @var integer $id
