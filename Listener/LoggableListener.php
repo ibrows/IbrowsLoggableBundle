@@ -96,7 +96,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                         $field => array(null, $id)
                     )
                 );
-                $ea->setOriginalObjectProperty($uow, spl_object_hash($logEntry), $field, $id);
+                $ea->setOriginalObjectProperty($uow, $logEntry, $field, $id);
             }
             unset($this->pendingLogEntryInserts[$oid]);
 
@@ -506,7 +506,9 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
         /* @var $om EntityManager */
         $uow = $om->getUnitOfWork();
         $meta = $om->getClassMetadata(get_class($object));
-        $hash = spl_object_hash($object);
+        // Doctrine ORM 2.7+ keys its UoW maps (entityChangeSets, originalEntityData)
+        // by spl_object_id (int), not spl_object_hash (string).
+        $hash = spl_object_id($object);
         $data = $logEntry->getData();
         $oldData = $logEntry->getOldData();
 
@@ -556,7 +558,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                         $oldValue = $oldValue ? $om->getReference($mapping['targetEntity'], $oldValue) : null;
                     }
                     $meta->getReflectionProperty($field)->setValue($object, $oldValue);
-                    $ea->setOriginalObjectProperty($uow, $hash, $field, $oldValue);
+                    $ea->setOriginalObjectProperty($uow, $object, $field, $oldValue);
                     // $undoSet[$field] = array(null,$oldValue);
                 }
 
