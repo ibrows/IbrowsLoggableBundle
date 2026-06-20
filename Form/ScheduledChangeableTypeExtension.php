@@ -10,6 +10,7 @@ namespace Ibrows\LoggableBundle\Form;
 
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,7 +44,7 @@ class ScheduledChangeableTypeExtension extends AbstractTypeExtension
             }
         }
 
-        $builder->add($propertyName, 'date', array('widget' => 'single_text', 'format' => $format,'required'=>false));
+        $builder->add($propertyName, DateType::class, array('widget' => 'single_text', 'format' => $format,'required'=>false));
 
     }
 

@@ -38,8 +38,8 @@ class LogAdmin extends Admin
         $mapper->add('action');
         $mapper->add('objectId');
         $mapper->add('objectClass');
-        $mapper->add('data','array', array('template'=>'IbrowsLoggableBundle:Admin:show_array.html.twig'));
-        $mapper->add('oldData','array', array('template'=>'IbrowsLoggableBundle:Admin:show_array.html.twig'));
+        $mapper->add('data','array', array('template'=>'@IbrowsLoggable/Admin/show_array.html.twig'));
+        $mapper->add('oldData','array', array('template'=>'@IbrowsLoggable/Admin/show_array.html.twig'));
         $mapper->add('loggedAt');
         $mapper->add('username');
         $mapper->add('sourceUsername');

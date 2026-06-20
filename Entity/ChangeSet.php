@@ -63,14 +63,14 @@ class ChangeSet
     /**
      * @var array $data
      *
-     * @ORM\Column(type="json_array", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      */
     protected $data;
 
     /**
      * @var array $olddata
      *
-     * @ORM\Column(type="json_array", nullable=true, name="old_data")
+     * @ORM\Column(type="json", nullable=true, name="old_data")
      */
     protected $oldData;
 
