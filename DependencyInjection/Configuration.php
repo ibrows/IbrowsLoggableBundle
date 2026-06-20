@@ -18,9 +18,9 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
 
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('ibrows_loggable');
 
-        $rootNode = $treeBuilder->root('ibrows_loggable');
+        $rootNode = $treeBuilder->getRootNode();
         $rootNode->children()
             ->arrayNode('changeable')->addDefaultsIfNotSet()->children()
                 ->booleanNode('CatchException')->defaultFalse()->end()
