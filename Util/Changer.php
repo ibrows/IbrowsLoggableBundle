@@ -9,7 +9,7 @@
 namespace Ibrows\LoggableBundle\Util;
 
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Ibrows\LoggableBundle\Repository\ChangeSetRepository;
 use Ibrows\LoggableBundle\Repository\LogRepository;
 use Psr\Log\LoggerInterface;
@@ -32,7 +32,7 @@ class Changer
     protected $output;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
+     * @var \Doctrine\Persistence\ObjectManager
      */
     protected $manager;
 

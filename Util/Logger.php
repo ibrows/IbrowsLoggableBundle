@@ -9,7 +9,7 @@
 namespace Ibrows\LoggableBundle\Util;
 
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Ibrows\LoggableBundle\Entity\Log;
 use Ibrows\LoggableBundle\Entity\LogMany2Many;
 use Ibrows\LoggableBundle\Entity\LogParent;
@@ -37,7 +37,7 @@ class Logger
     protected $output;
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
+     * @var \Doctrine\Persistence\ObjectManager
      */
     protected $manager;
 
