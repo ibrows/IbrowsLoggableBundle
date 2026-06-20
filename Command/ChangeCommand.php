@@ -1,14 +1,24 @@
 <?php
 namespace Ibrows\LoggableBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Bundle\FrameworkBundle\Tests\Functional\AppKernel;
+use Ibrows\LoggableBundle\Util\Changer;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ChangeCommand extends ContainerAwareCommand
+class ChangeCommand extends Command
 {
+    /**
+     * @var Changer
+     */
+    private $changer;
+
+    public function __construct(Changer $changer)
+    {
+        $this->changer = $changer;
+        parent::__construct();
+    }
 
     /* (non-PHPdoc)
      * @see \Symfony\Component\Console\Command\Command::configure()
@@ -22,14 +32,14 @@ class ChangeCommand extends ContainerAwareCommand
     /* (non-PHPdoc)
      * @see \Symfony\Component\Console\Command\Command::execute()
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
         $now = new \DateTime($input->getOption('nowdate'));
         $output->writeln("ibrows:loggable:change");
         $output->writeln("-----------");
         $this->applyChanges($output, $now);
 
+        return Command::SUCCESS;
     }
 
 
@@ -39,10 +49,8 @@ class ChangeCommand extends ContainerAwareCommand
      */
     protected function applyChanges($output, $now)
     {
-        $changer = $this->getContainer()->get('ibrows_loggable.changer');
+        $changer = $this->changer;
         $changer->setOutput($output);
         $changer->applyChanges($now);
     }
-
-
 }
