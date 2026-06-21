@@ -1,21 +1,19 @@
 <?php
 namespace Ibrows\LoggableBundle\Entity;
 
+use Ibrows\LoggableBundle\Repository\LogParentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ibrows\Bundle\SonataAdminAnnotationBundle\Annotation as Sonata;
 
-/**
- * @ORM\Entity(repositoryClass="Ibrows\LoggableBundle\Repository\LogParentRepository")
- */
+#[ORM\Entity(repositoryClass: LogParentRepository::class)]
 class LogParent extends AbstractLog
 {
 
     /**
      * @var string $data
-     *
-     * @ORM\Column(name="field_name", nullable=true)
      */
+    #[ORM\Column(name: 'field_name', nullable: true)]
     protected $fieldName;
 
     public function __construct(){
@@ -27,9 +25,9 @@ class LogParent extends AbstractLog
 
     /**
      * @var Log
-     * @ORM\ManyToOne(targetEntity="Ibrows\LoggableBundle\Entity\Log", inversedBy="parents")
-     * @ORM\JoinColumn(name="child_log_id")
      */
+    #[ORM\JoinColumn(name: 'child_log_id')]
+    #[ORM\ManyToOne(targetEntity: Log::class, inversedBy: 'parents')]
     protected $childLog;
 
     /**

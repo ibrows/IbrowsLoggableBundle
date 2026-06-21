@@ -2,6 +2,7 @@
 namespace Ibrows\LoggableBundle\Entity;
 
 
+use Ibrows\LoggableBundle\Repository\LogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Loggable\Entity\MappedSuperclass\AbstractLogEntry;
@@ -9,9 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Ibrows\LoggableBundle\Model\AbstractLogModel;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="Ibrows\LoggableBundle\Repository\LogRepository")
- */
+#[ORM\Entity(repositoryClass: LogRepository::class)]
 class Log extends AbstractLog
 {
 
