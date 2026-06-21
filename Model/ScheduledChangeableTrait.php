@@ -28,7 +28,7 @@ trait ScheduledChangeableTrait
     /**
      * @param \DateTime $scheduledChangeDate
      */
-    public function setScheduledChangeDate(\DateTime $scheduledChangeDate = null)
+    public function setScheduledChangeDate(?\DateTime $scheduledChangeDate = null)
     {
         $this->scheduledChangeDate = $scheduledChangeDate;
     }

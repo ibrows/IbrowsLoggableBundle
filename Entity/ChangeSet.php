@@ -100,7 +100,7 @@ class ChangeSet
     /**
      * @param \DateTime $changeAt
      */
-    public function setChangeAt(\DateTime $changeAt = null)
+    public function setChangeAt(?\DateTime $changeAt = null)
     {
         $this->changeAt = $changeAt;
     }

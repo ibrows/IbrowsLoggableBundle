@@ -73,7 +73,7 @@ class LogParent extends AbstractLog
     /**
      * @param Log $childLog
      */
-    public function setChildLog(Log $childLog = null)
+    public function setChildLog(?Log $childLog = null)
     {
         $this->childLog = $childLog;
         if ($childLog == null) {
