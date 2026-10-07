@@ -5,7 +5,7 @@ use Doctrine\Common\EventArgs;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\OnClearEventArgs;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\NoResultException;
 use Gedmo\Loggable\Mapping\Event\LoggableAdapter;
 use Gedmo\Tool\Wrapper\AbstractWrapper;
@@ -67,7 +67,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * @param EventArgs $args
      */
-    public function postPersist(EventArgs $args)
+    public function postPersist(EventArgs $args): void
     {
         parent::postPersist($args);
 
@@ -87,7 +87,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
             foreach ($this->pendingParents[$oid] as $pending) {
                 $logEntry = $pending['log'];
                 $field = $pending['field'];
-                /** @var $logEntryMeta ClassMetadataInfo */
+                /** @var $logEntryMeta ClassMetadata */
                 $logEntryMeta = $om->getClassMetadata(get_class($logEntry));
                 $logEntryMeta->getReflectionProperty($field)->setValue($logEntry, $id);
                 $uow->scheduleExtraUpdate(
@@ -107,7 +107,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * {@inheritdoc}
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return array(
             'onClear',
@@ -131,7 +131,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * @param EventArgs $eventArgs
      */
-    public function onFlush(EventArgs $eventArgs)
+    public function onFlush(EventArgs $eventArgs): void
     {
         if (!$this->enabled) {
             return;
@@ -665,7 +665,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
     /**
      * @param string|TokenInterface|object $username
      */
-    public function setUsername($username)
+    public function setUsername($username): void
     {
         parent::setUsername($username);
         if (!$username instanceof TokenInterface) {

@@ -13,7 +13,7 @@ class IbrowsLoggableBundle extends Bundle
     /**
      * @param ContainerBuilder $container
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
         $container->addCompilerPass(new CompilerPass());
@@ -22,7 +22,7 @@ class IbrowsLoggableBundle extends Bundle
     /**
      * LoggableListener as last listener aka shizzle my nizze
      */
-    public function boot()
+    public function boot(): void
     {
         //shizzle my nizzle
         $eventManager = $this->container->get('doctrine')->getManager()->getEventManager();

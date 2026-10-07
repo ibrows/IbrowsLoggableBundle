@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class CompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $containerBuilder)
+    public function process(ContainerBuilder $containerBuilder): void
     {
 
         $configs = $containerBuilder->getParameter('ibrows_loggable.loggable');
