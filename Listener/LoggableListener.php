@@ -363,7 +363,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
         $logEntry = new LogMany2Many();
         $logEntry->setAction($message);
-        $logEntry->setUsername($this->username);
+        $logEntry->setUsername($this->getUsername());
         $logEntry->setSourceUsername($this->sourceUsername);
         $wrapped1 = AbstractWrapper::wrap($object, $om);
         $logEntry->setObjectClass($wrapped1->getMetadata()->name);
@@ -641,7 +641,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
         $logEntry = $logEntryMeta->newInstance();
 
         $logEntry->__construct();
-        $logEntry->setUsername($this->username);
+        $logEntry->setUsername($this->getUsername());
         $logEntry->setSourceUsername($this->sourceUsername);
         $logEntry->setObjectClass($class);
         $logEntry->setLoggedAt();
@@ -674,7 +674,22 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
         if (!$originalToken = $this->getOriginalToken($username)) {
             return;
         }
-        $this->sourceUsername = $originalToken->getUsername();
+        $this->sourceUsername = $originalToken->getUserIdentifier();
+    }
+
+    /**
+     * Since stof/doctrine-extensions-bundle 1.14 the current user is no longer pushed into
+     * $this->username by a request listener; it comes from the actor provider instead.
+     * A username set explicitly (e.g. by the Changer when applying a scheduled ChangeSet from
+     * the CLI, where there is no security token) still takes precedence.
+     */
+    protected function getUsername(): ?string
+    {
+        if (null !== $this->username) {
+            return $this->username;
+        }
+
+        return parent::getUsername();
     }
 
     /**
@@ -690,7 +705,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
         $parentLogEntry = new LogParent();
         $parentLogEntry->setAction($message);
-        $parentLogEntry->setUsername($this->username);
+        $parentLogEntry->setUsername($this->getUsername());
         $parentLogEntry->setSourceUsername($this->sourceUsername);
         $wrappedParent = AbstractWrapper::wrap($object, $om);
         $parentLogEntry->setObjectClass($wrappedParent->getMetadata()->name);
