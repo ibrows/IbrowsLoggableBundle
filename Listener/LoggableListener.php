@@ -98,7 +98,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                 );
                 $ea->setOriginalObjectProperty($uow, $logEntry, $field, $id);
             }
-            unset($this->pendingLogEntryInserts[$oid]);
+            unset($this->pendingParents[$oid]);
 
         }
 
@@ -181,7 +181,9 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
 
         if ($action === self::ACTION_CREATE && $ea->isPostInsertGenerator($meta)) {
-            $this->pendingLogEntryInserts[spl_object_hash($object)] = $logEntry;
+            // Gedmo 3 (parent::postPersist) looks pending inserts up by spl_object_id(), not spl_object_hash():
+            // with the hash the object id of a "create" log entry was never filled in.
+            $this->pendingLogEntryInserts[spl_object_id($object)] = $logEntry;
         } else {
             $logEntry->setObjectId($wrapped->getIdentifier());
         }
@@ -228,7 +230,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
 
                 if ($meta->isSingleValuedAssociation($field)) {
                     if ($value) {
-                        $oid = spl_object_hash($value);
+                        $oid = spl_object_id($value); // key used by Gedmo 3 parent::postPersist
                         $wrappedAssoc = AbstractWrapper::wrap($value, $om);
                         $value = $wrappedAssoc->getIdentifier(false);
                         if (!is_array($value) && !$value) {
@@ -240,7 +242,7 @@ class LoggableListener extends \Gedmo\Loggable\LoggableListener
                         $value = $wrappedAssoc->getIdentifier($this->useOnySingleIds);
                     }
                     if ($oldValue) {
-                        $oid = spl_object_hash($oldValue);
+                        $oid = spl_object_id($oldValue); // key used by Gedmo 3 parent::postPersist
                         $wrappedAssoc = AbstractWrapper::wrap($oldValue, $om);
                         $oldValue = $wrappedAssoc->getIdentifier(false);
                         if (!is_array($oldValue) && !$oldValue) {
